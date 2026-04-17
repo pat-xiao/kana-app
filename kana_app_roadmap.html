@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kana App — Project Roadmap</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f5f4f0;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-text-tertiary: #888780;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.35);
+    --font-sans: system-ui, -apple-system, sans-serif;
+    --border-radius-lg: 12px;
+    --border-radius-md: 8px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background-primary: #1e1e1c;
+      --color-background-secondary: #2a2a28;
+      --color-text-primary: #e8e6df;
+      --color-text-secondary: #a8a69f;
+      --color-text-tertiary: #6e6d68;
+      --color-border-tertiary: rgba(255,255,255,0.1);
+      --color-border-secondary: rgba(255,255,255,0.18);
+      --color-border-primary: rgba(255,255,255,0.28);
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    padding: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+  }
+
+  .phase-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    align-items: stretch;
+  }
+
+  .phase-label {
+    width: 90px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding-right: 12px;
+  }
+
+  .phase-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .phase-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    text-align: right;
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+
+  .phase-timeline {
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    text-align: right;
+    margin-top: 2px;
+  }
+
+  .cards {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .card {
+    flex: 1;
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 10px 12px;
+    background: var(--color-background-secondary);
+  }
+
+  .card-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+
+  .card-body {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 20px;
+    letter-spacing: .02em;
+  }
+
+  .tag-py  { background: #E6F1FB; color: #0C447C; }
+  .tag-git { background: #EAF3DE; color: #27500A; }
+  .tag-ai  { background: #EEEDFE; color: #3C3489; }
+  .tag-web { background: #FAEEDA; color: #633806; }
+  .tag-ux  { background: #FAECE7; color: #4A1B0C; }
+
+  @media (prefers-color-scheme: dark) {
+    .tag-py  { background: #0C447C; color: #B5D4F4; }
+    .tag-git { background: #27500A; color: #C0DD97; }
+    .tag-ai  { background: #3C3489; color: #CECBF6; }
+    .tag-web { background: #633806; color: #FAC775; }
+    .tag-ux  { background: #4A1B0C; color: #F5C4B3; }
+  }
+
+  .connector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .conn-spacer { width: 90px; flex-shrink: 0; }
+
+  .conn-line {
+    width: 2px;
+    height: 18px;
+    background: var(--color-border-secondary);
+    margin-left: 50px;
+    border-radius: 1px;
+  }
+
+  .ph-bar {
+    width: 4px;
+    border-radius: 99px;
+    align-self: stretch;
+    flex-shrink: 0;
+  }
+
+  .ph1 { background: #534AB7; }
+  .ph2 { background: #0F6E56; }
+  .ph3 { background: #854F0B; }
+  .ph4 { background: #993556; }
+
+  .legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--color-border-tertiary);
+  }
+
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 1rem; }
+    .cards { flex-direction: column; }
+    .phase-label { width: 70px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Kana App — Project Roadmap</h1>
+<p class="subtitle">10-week plan · Python · Git · AI tools · Responsive webapp</p>
+
+<div class="phase-row">
+  <div class="phase-label">
+    <div class="phase-num">Phase 1</div>
+    <div class="phase-name">Foundations</div>
+    <div class="phase-timeline">Weeks 1–2</div>
+  </div>
+  <div class="ph-bar ph1"></div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">Dev environment</div>
+      <div class="card-body">Install Python, VS Code, Git. Set up SSH key for GitHub, create repo, learn basic git flow (add, commit, push, branch).</div>
+      <div class="card-tags">
+        <span class="tag tag-git">Git</span>
+        <span class="tag tag-py">Python</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Python basics</div>
+      <div class="card-body">Learn variables, lists, dicts, functions, and classes. Use Claude Code to explain unfamiliar syntax as you encounter it.</div>
+      <div class="card-tags">
+        <span class="tag tag-py">Python</span>
+        <span class="tag tag-ai">Claude Code</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Framework research</div>
+      <div class="card-body">Research Flask vs FastAPI. Use Claude to compare tradeoffs. Document decision in a README — this mimics real architect decisions.</div>
+      <div class="card-tags">
+        <span class="tag tag-py">Python</span>
+        <span class="tag tag-ai">Claude Code</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="connector"><div class="conn-spacer"></div><div style="width:6px"></div><div class="conn-line"></div></div>
+
+<div class="phase-row">
+  <div class="phase-label">
+    <div class="phase-num">Phase 2</div>
+    <div class="phase-name">Core App</div>
+    <div class="phase-timeline">Weeks 3–5</div>
+  </div>
+  <div class="ph-bar ph2"></div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">Data model</div>
+      <div class="card-body">Define Kana data (hiragana + katakana, romaji, stroke order). Store as JSON or SQLite. Design quiz logic: random draw, spaced repetition.</div>
+      <div class="card-tags">
+        <span class="tag tag-py">Python</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Quiz engine</div>
+      <div class="card-body">Build core quiz logic: multiple choice, type-in answer, streak tracking. Write unit tests with pytest. Use Claude Code to debug.</div>
+      <div class="card-tags">
+        <span class="tag tag-py">Python</span>
+        <span class="tag tag-ai">Claude Code</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Web routes + UI</div>
+      <div class="card-body">Build Flask/FastAPI routes. Create HTML templates with Jinja2. Add basic CSS for mobile responsiveness (flexbox, media queries).</div>
+      <div class="card-tags">
+        <span class="tag tag-web">Web</span>
+        <span class="tag tag-ux">UI/UX</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="connector"><div class="conn-spacer"></div><div style="width:6px"></div><div class="conn-line"></div></div>
+
+<div class="phase-row">
+  <div class="phase-label">
+    <div class="phase-num">Phase 3</div>
+    <div class="phase-name">Deploy</div>
+    <div class="phase-timeline">Weeks 6–7</div>
+  </div>
+  <div class="ph-bar ph3"></div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">Cloud deployment</div>
+      <div class="card-body">Deploy to Render or Railway (free tier). Set up environment variables, add a requirements.txt, configure Gunicorn as the WSGI server.</div>
+      <div class="card-tags">
+        <span class="tag tag-web">Web</span>
+        <span class="tag tag-git">Git</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">CI/CD pipeline</div>
+      <div class="card-body">Use GitHub Actions to auto-deploy on push to main. Add a simple test step. This is your first real DevOps experience for the resume.</div>
+      <div class="card-tags">
+        <span class="tag tag-git">Git</span>
+        <span class="tag tag-ai">Claude Code</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Testing</div>
+      <div class="card-body">Write pytest unit tests for quiz logic and API routes. Aim for 70%+ coverage. Add browser testing basics with Playwright or Selenium.</div>
+      <div class="card-tags">
+        <span class="tag tag-py">Python</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="connector"><div class="conn-spacer"></div><div style="width:6px"></div><div class="conn-line"></div></div>
+
+<div class="phase-row">
+  <div class="phase-label">
+    <div class="phase-num">Phase 4</div>
+    <div class="phase-name">Polish</div>
+    <div class="phase-timeline">Weeks 8–10</div>
+  </div>
+  <div class="ph-bar ph4"></div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-title">Feature expansion</div>
+      <div class="card-body">Add user progress persistence (localStorage or DB), spaced repetition algorithm (SM-2), stroke order animations, and a stats dashboard.</div>
+      <div class="card-tags">
+        <span class="tag tag-py">Python</span>
+        <span class="tag tag-ux">UI/UX</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Responsive design</div>
+      <div class="card-body">Audit on real devices. Fix touch targets, font sizes, and layout breakpoints. Test with Chrome DevTools mobile simulation.</div>
+      <div class="card-tags">
+        <span class="tag tag-ux">UI/UX</span>
+        <span class="tag tag-web">Web</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Portfolio wrap-up</div>
+      <div class="card-body">Write a strong README with screenshots, architecture notes, and a live demo link. Add to GitHub portfolio. Write up the project for your resume.</div>
+      <div class="card-tags">
+        <span class="tag tag-git">Git</span>
+        <span class="tag tag-ai">Claude Code</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="leg-item"><span class="tag tag-py">Python</span> Python skills</div>
+  <div class="leg-item"><span class="tag tag-git">Git</span> Git / GitHub</div>
+  <div class="leg-item"><span class="tag tag-ai">Claude Code</span> AI tools</div>
+  <div class="leg-item"><span class="tag tag-web">Web</span> Web / DevOps</div>
+  <div class="leg-item"><span class="tag tag-ux">UI/UX</span> Design</div>
+</div>
+
+</body>
+</html>
