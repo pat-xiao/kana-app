@@ -15,7 +15,13 @@ class QuizQuestion(BaseModel):
     answer: str
 
 
+class QuizAnswer(BaseModel):
+    question: str
+    user_answer: str
+
+
 class QuizResult(BaseModel):
     question: str
     user_answer: str
     correct: bool
+    correct_answer: str

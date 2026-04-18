@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from typing import Literal
-from models import Kana
+from models import Kana, QuizAnswer, QuizQuestion, QuizResult
 from data.loader import load_kana
+import quiz
 
 app = FastAPI()
 
@@ -21,3 +22,14 @@ def get_all_kana():
 @app.get("/kana/{type}", response_model=list[Kana])
 def get_kana_by_type(type: Literal["hiragana", "katakana"]):
     return [k for k in _kana if k.type == type]
+
+@app.get("/quiz", response_model=QuizQuestion)
+def get_quiz_question():
+    return quiz.generate_question(_kana)
+
+
+@app.post("/quiz/answer", response_model=QuizResult)
+def check_question_answer(body: QuizAnswer):
+    kana = next(k for k in _kana if k.character == body.question)
+    question = QuizQuestion(prompt=kana.character, choices=[], answer=kana.romaji)
+    return quiz.check_answer(question, body.user_answer)
