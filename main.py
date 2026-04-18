@@ -1,3 +1,7 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI
 from typing import Literal
 from models import Kana, QuizAnswer, QuizQuestion, QuizResult
@@ -12,6 +16,11 @@ _kana: list[Kana] = load_kana()
 @app.get("/")
 def root():
     return {"message": "Kana app is running"}
+
+
+@app.get("/config")
+def get_config():
+    return {"ENV": os.environ.get("ENV", "not set")}
 
 
 @app.get("/kana", response_model=list[Kana])
