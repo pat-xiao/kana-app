@@ -70,7 +70,7 @@ The frontend is a separate React application built with Vite, located in `fronte
 | `QuizCard` | Displays the kana character prompt and renders the four multiple-choice buttons. Disabled after an answer is submitted. |
 | `ResultBanner` | Shows correct/incorrect feedback after each answer, including the correct romaji when the user was wrong. Clears on the next question. |
 | `ScoreTracker` | Displays the current score and streak. Reads from state passed down by `App`. |
-| `KanaSelectorPanel` | Lets the user choose hiragana, katakana, or both before starting or resetting a session. Selection is passed to `App` and used to filter the `/kana/{type}` request. |
+| `QuizConfigPanel` | Lets the user choose hiragana, katakana, or both before starting or resetting a session. Additionally allows the user to select multiple choice or free text for the quiz mode. Selection is passed to `App` and used to filter the `/kana/{type}` request. |
 
 ### State
 
@@ -81,7 +81,7 @@ All state is owned by `App` and passed down as props:
 | `currentQuestion` | `QuizQuestion \| null` | The active question returned by `GET /quiz`. Null before the first fetch and while loading. |
 | `score` | `number` | Count of correct answers in the current session. |
 | `streak` | `number` | Count of consecutive correct answers, reset to 0 on any wrong answer. |
-| `quizMode` | `"hiragana" \| "katakana" \| "both"` | Selected by `KanaSelectorPanel`. Determines which kana subset is passed to question generation. |
+| `quizConfig` | `{ kanaType: "hiragana" \| "katakana" \| "both", quizMode: "multiple-choice" \| "free-text" }` | Selected by `QuizConfigPanel`. Determines kana subset and answer input mode. Replaces the previous `quizMode` and `kanaType` separate fields. |
 | `answerFeedback` | `"pending" \| "correct" \| "incorrect"` | Drives the `ResultBanner` display and button disabled state. Reset to `"pending"` when the next question loads. |
 
 ### API Calls
