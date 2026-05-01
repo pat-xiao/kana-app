@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 function getButtonStyle(choice, selected, correctAnswer, feedback) {
   const base = {
@@ -24,10 +24,6 @@ function getButtonStyle(choice, selected, correctAnswer, feedback) {
 
 export default function QuizCard({ question, onAnswer, feedback }) {
   const [selected, setSelected] = useState(null)
-
-  useEffect(() => {
-    setSelected(null)
-  }, [question.prompt])
 
   function handleClick(choice) {
     if (feedback !== 'pending') return
