@@ -5,7 +5,9 @@ function getButtonStyle(choice, selected, correctAnswer, feedback) {
     fontSize: '1.1rem',
     padding: '10px 20px',
     borderRadius: '6px',
-    border: '2px solid var(--color-border)',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderColor: 'var(--color-border)',
     cursor: feedback === 'pending' ? 'pointer' : 'default',
     background: 'var(--color-bg)',
     color: 'var(--color-text-primary)',
@@ -23,11 +25,11 @@ function getButtonStyle(choice, selected, correctAnswer, feedback) {
   return { ...base, background: 'var(--color-surface)', color: 'var(--color-text-secondary)', borderColor: 'var(--color-border)' }
 }
 
-export default function QuizCard({ question, onAnswer, feedback }) {
+export default function QuizCard({ question, onAnswer, feedback, loading = false }) {
   const [selected, setSelected] = useState(null)
 
   function handleClick(choice) {
-    if (feedback !== 'pending') return
+    if (feedback !== 'pending' || loading) return
     setSelected(choice)
     onAnswer(choice)
   }
@@ -39,7 +41,7 @@ export default function QuizCard({ question, onAnswer, feedback }) {
         {question.choices.map((choice) => (
           <button
             key={choice}
-            disabled={feedback !== 'pending'}
+            disabled={feedback !== 'pending' || loading}
             onClick={() => handleClick(choice)}
             style={getButtonStyle(choice, selected, question.answer, feedback)}
           >

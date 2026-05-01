@@ -3,6 +3,7 @@ import QuizConfigPanel from './components/QuizConfigPanel'
 import QuizCard from './components/QuizCard'
 import ResultBanner from './components/ResultBanner'
 import ScoreTracker from './components/ScoreTracker'
+import LoadingSpinner from './components/LoadingSpinner'
 import './App.css'
 
 async function fetchQuestion() {
@@ -18,6 +19,7 @@ export default function App() {
   const [streak, setStreak] = useState(0)
   const [correctAnswer, setCorrectAnswer] = useState(null)
   const [darkMode, setDarkMode] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   function toggleDark() {
     const next = !darkMode
@@ -27,16 +29,20 @@ export default function App() {
 
   async function handleStart(config) {
     setQuizConfig(config)
+    setLoading(true)
     setCurrentQuestion(await fetchQuestion())
+    setLoading(false)
   }
 
   async function handleAnswer(userAnswer) {
+    setLoading(true)
     const res = await fetch('/api/quiz/answer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question: currentQuestion.prompt, user_answer: userAnswer }),
     })
     const result = await res.json()
+    setLoading(false)
     setFeedback(result.correct ? 'correct' : 'incorrect')
     setCorrectAnswer(result.correct_answer)
     if (result.correct) {
@@ -50,7 +56,9 @@ export default function App() {
   async function handleNext() {
     setFeedback('pending')
     setCorrectAnswer(null)
+    setLoading(true)
     setCurrentQuestion(await fetchQuestion())
+    setLoading(false)
   }
 
   const toggleButton = (
@@ -84,17 +92,25 @@ export default function App() {
     <div style={{ padding: '40px', maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {toggleButton}
       <ScoreTracker score={score} streak={streak} />
-      {currentQuestion && (
-        <QuizCard
-          key={currentQuestion.prompt}
-          question={currentQuestion}
-          onAnswer={handleAnswer}
-          feedback={feedback}
-        />
-      )}
+      {loading && !currentQuestion
+        ? <LoadingSpinner message="Loading question..." />
+        : currentQuestion && (
+          <>
+            <QuizCard
+              key={currentQuestion.prompt}
+              question={currentQuestion}
+              onAnswer={handleAnswer}
+              feedback={feedback}
+              loading={loading}
+            />
+            {loading && feedback === 'pending' && <LoadingSpinner />}
+          </>
+        )
+      }
       <ResultBanner feedback={feedback} correctAnswer={correctAnswer} />
       {feedback !== 'pending' && (
         <button
+          disabled={loading}
           onClick={handleNext}
           style={{
             alignSelf: 'center',
@@ -105,10 +121,15 @@ export default function App() {
             color: '#fff',
             fontSize: '1rem',
             fontWeight: '600',
-            cursor: 'pointer',
+            cursor: loading ? 'default' : 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minWidth: '100px',
+            minHeight: '42px',
           }}
         >
-          Next
+          {loading ? <LoadingSpinner /> : 'Next'}
         </button>
       )}
     </div>
