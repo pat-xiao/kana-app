@@ -6,9 +6,8 @@ export default function ResultBanner({ feedback, correctAnswer }) {
     <div style={{
       padding: '12px 20px',
       borderRadius: '6px',
-      background: correct ? '#d4edda' : '#f8d7da',
-      color: correct ? '#155724' : '#721c24',
-      border: `1px solid ${correct ? '#c3e6cb' : '#f5c6cb'}`,
+      background: correct ? 'var(--color-correct)' : 'var(--color-incorrect)',
+      color: '#fff',
       fontWeight: '600',
       textAlign: 'center',
     }}>

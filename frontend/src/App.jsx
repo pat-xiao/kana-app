@@ -17,6 +17,13 @@ export default function App() {
   const [score, setScore] = useState(0)
   const [streak, setStreak] = useState(0)
   const [correctAnswer, setCorrectAnswer] = useState(null)
+  const [darkMode, setDarkMode] = useState(false)
+
+  function toggleDark() {
+    const next = !darkMode
+    setDarkMode(next)
+    document.body.classList.toggle('dark', next)
+  }
 
   async function handleStart(config) {
     setQuizConfig(config)
@@ -46,9 +53,27 @@ export default function App() {
     setCurrentQuestion(await fetchQuestion())
   }
 
+  const toggleButton = (
+    <button
+      onClick={toggleDark}
+      style={{
+        position: 'fixed',
+        top: '16px',
+        right: '16px',
+        background: 'none',
+        border: 'none',
+        fontSize: '1.4rem',
+        cursor: 'pointer',
+      }}
+    >
+      {darkMode ? '☀️' : '🌙'}
+    </button>
+  )
+
   if (!quizConfig) {
     return (
       <div style={{ padding: '40px', textAlign: 'center' }}>
+        {toggleButton}
         <h1 style={{ marginBottom: '32px' }}>Kana App</h1>
         <QuizConfigPanel onStart={handleStart} />
       </div>
@@ -57,6 +82,7 @@ export default function App() {
 
   return (
     <div style={{ padding: '40px', maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {toggleButton}
       <ScoreTracker score={score} streak={streak} />
       {currentQuestion && (
         <QuizCard
@@ -75,7 +101,7 @@ export default function App() {
             padding: '10px 28px',
             borderRadius: '6px',
             border: 'none',
-            background: '#4f46e5',
+            background: 'var(--color-accent)',
             color: '#fff',
             fontSize: '1rem',
             fontWeight: '600',

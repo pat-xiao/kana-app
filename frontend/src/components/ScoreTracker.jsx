@@ -6,7 +6,8 @@ export default function ScoreTracker({ score, streak }) {
       justifyContent: 'center',
       padding: '10px 20px',
       borderRadius: '6px',
-      background: '#f5f5f5',
+      background: 'var(--color-surface)',
+      color: 'var(--color-text-primary)',
       fontWeight: '600',
     }}>
       <span>Score: {score}</span>

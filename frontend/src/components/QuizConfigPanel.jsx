@@ -16,9 +16,9 @@ function optionButtonStyle(selected) {
     padding: '8px 18px',
     borderRadius: '6px',
     border: '2px solid',
-    borderColor: selected ? '#4f46e5' : '#ccc',
-    background: selected ? '#ede9fe' : '#fff',
-    color: selected ? '#3730a3' : '#333',
+    borderColor: selected ? 'var(--color-accent)' : 'var(--color-border)',
+    background: selected ? 'var(--color-accent)' : 'var(--color-surface)',
+    color: selected ? '#fff' : 'var(--color-text-primary)',
     cursor: 'pointer',
     fontWeight: selected ? '600' : '400',
   }
@@ -31,7 +31,7 @@ export default function QuizConfigPanel({ onStart }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
-        <span style={{ fontWeight: '600' }}>Kana Type</span>
+        <span style={{ fontWeight: '600', color: 'var(--color-text-primary)' }}>Kana Type</span>
         <div style={{ display: 'flex', gap: '8px' }}>
           {KANA_TYPES.map(({ label, value }) => (
             <button
@@ -46,7 +46,7 @@ export default function QuizConfigPanel({ onStart }) {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
-        <span style={{ fontWeight: '600' }}>Quiz Mode</span>
+        <span style={{ fontWeight: '600', color: 'var(--color-text-primary)' }}>Quiz Mode</span>
         <div style={{ display: 'flex', gap: '8px' }}>
           {QUIZ_MODES.map(({ label, value }) => (
             <button
@@ -66,7 +66,7 @@ export default function QuizConfigPanel({ onStart }) {
           padding: '10px 28px',
           borderRadius: '6px',
           border: 'none',
-          background: '#4f46e5',
+          background: 'var(--color-accent)',
           color: '#fff',
           fontSize: '1rem',
           fontWeight: '600',

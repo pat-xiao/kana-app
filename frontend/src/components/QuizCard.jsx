@@ -5,21 +5,22 @@ function getButtonStyle(choice, selected, correctAnswer, feedback) {
     fontSize: '1.1rem',
     padding: '10px 20px',
     borderRadius: '6px',
-    border: '2px solid #ccc',
+    border: '2px solid var(--color-border)',
     cursor: feedback === 'pending' ? 'pointer' : 'default',
-    background: '#fff',
+    background: 'var(--color-bg)',
+    color: 'var(--color-text-primary)',
     minWidth: '80px',
   }
 
   if (feedback === 'pending') return base
 
   if (choice === correctAnswer) {
-    return { ...base, background: '#d4edda', borderColor: '#28a745', color: '#155724' }
+    return { ...base, background: 'var(--color-correct)', borderColor: 'var(--color-correct)', color: '#fff' }
   }
   if (choice === selected && feedback === 'incorrect') {
-    return { ...base, background: '#f8d7da', borderColor: '#dc3545', color: '#721c24' }
+    return { ...base, background: 'var(--color-incorrect)', borderColor: 'var(--color-incorrect)', color: '#fff' }
   }
-  return { ...base, background: '#f5f5f5', color: '#999' }
+  return { ...base, background: 'var(--color-surface)', color: 'var(--color-text-secondary)', borderColor: 'var(--color-border)' }
 }
 
 export default function QuizCard({ question, onAnswer, feedback }) {
@@ -33,7 +34,7 @@ export default function QuizCard({ question, onAnswer, feedback }) {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <p style={{ fontSize: '5rem', margin: '0 0 24px' }}>{question.prompt}</p>
+      <p style={{ fontSize: '5rem', margin: '0 0 24px', fontFamily: "'Noto Serif JP', serif" }}>{question.prompt}</p>
       <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
         {question.choices.map((choice) => (
           <button
